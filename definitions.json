@@ -862,5 +862,25 @@
                 "name": "reg"
             }
         ]
+    },
+    {
+        "id": "CUST032",
+        "term_it": "termine",
+        "term_en": "termine",
+        "definition_it": "def",
+        "definition_en": "def",
+        "variants": [
+            "other"
+        ],
+        "relations": {
+            "related": [
+                "yess"
+            ]
+        },
+        "sources": [
+            {
+                "name": "reg"
+            }
+        ]
     }
 ]
