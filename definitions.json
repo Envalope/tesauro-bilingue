@@ -902,5 +902,25 @@
                 "name": "reg"
             }
         ]
+    },
+    {
+        "id": "CUST034",
+        "term_it": "proga",
+        "term_en": "proga",
+        "definition_it": "prova",
+        "definition_en": "prova",
+        "variants": [
+            "names"
+        ],
+        "relations": {
+            "related": [
+                "rel"
+            ]
+        },
+        "sources": [
+            {
+                "name": "source"
+            }
+        ]
     }
 ]
