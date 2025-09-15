@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tesauro Bilingue AI</title>
+<style>
+body { font-family: 'Roboto', sans-serif; margin:0; padding:0; background:#f8f9fa; color:#222; }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px; background: #1f3f5c; color:white; flex-wrap:wrap; }
+header h1 { margin:0; font-size:2em; font-weight:700; }
+.navbar { display:flex; gap:20px; }
+.navbar a { color:white; text-decoration:none; font-weight:bold; transition:0.3s; cursor:pointer; }
+.navbar a:hover { text-decoration:underline; }
+.language-select { text-align:right; font-size:0.85em; }
+.language-select a { cursor:pointer; text-decoration:underline; color:white; margin:0 5px; }
+.language-select a.selected { font-weight:bold; text-decoration:none; }
+.intro { text-align:center; padding:25px 50px; background:#eef2f7; color:#222; font-size:1.1em; line-height:1.6em; margin-bottom:20px; border-bottom:1px solid #ccc; }
+.area-filter { margin:10px 0 30px 0; text-align:center; }
+.badge { display:inline-block; padding:6px 16px; margin:5px; border-radius:15px; font-weight:500; cursor:pointer; transition:all 0.2s ease; font-size:0.95em; opacity:0.7; background:#ddd; color:#333; }
+.badge:hover { opacity:1; }
+.badge.selected { opacity:1; font-weight:600; }
+.definition-card { border-left:5px solid; padding:20px; margin:25px auto; max-width:900px; background:white; box-shadow:0 4px 6px rgba(0,0,0,0.08); opacity:1; font-family:'Roboto', sans-serif; border-radius:10px; }
+.definition-card div { margin-bottom:8px; }
+.definition-card strong { color:#1f3f5c; font-weight:600; }
+.label-area { font-size:0.9em; font-weight:bold; padding:4px 10px; border-radius:8px; display:inline-block; margin-bottom:10px; }
+.update-link { font-size:0.9em; color:#1f3f5c; cursor:pointer; text-decoration:underline; margin-top:5px; display:inline-block; }
+.update-link:hover { color:#155a8a; }
+#search-input { width:50%; padding:8px 12px; margin:10px auto 30px auto; display:block; border-radius:6px; border:1px solid #bbb; font-size:1em; }
+footer { text-align:center; padding:20px; background:#1f3f5c; color:white; font-size:0.9em; margin-top:40px; }
+</style>
+</head>
+<body>
+<header>
+<h1 id="header-title">Tesauro Bilingue AI</h1>
+<div class="navbar">
+<a href="index.html" data-i18n="home">Home</a>
+<a href="new_term.html" data-i18n="new_term">Proponi nuovo termine</a>
+</div>
+<div class="language-select">
+<a class="lang-badge" data-lang="en">English</a> |
+<a class="lang-badge" data-lang="it">Italiano</a>
+</div>
+</header>
+
+<div class="intro" id="intro-text">Benvenuto nel tesauro bilingue dedicato alla governance dell'Intelligenza Artificiale. Filtra per area semantica cliccando sui badge qui sotto o cerca un termine:</div>
+<input type="text" id="search-input" placeholder="Cerca un termine...">
+
+<div class="area-filter" id="area-filter">
+<span class="badge selected" data-area="all" data-i18n-area="all_areas">All semantic areas</span>
+<span class="badge" data-area="normativa-giuridica" style="background:#cce0ff; color:#1f3f5c" data-i18n-area="normativa-giuridica">normativa-giuridica</span><span class="badge" data-area="tecnico-operativa" style="background:#d0e4dd; color:#2c3e50" data-i18n-area="tecnico-operativa">tecnico-operativa</span><span class="badge" data-area="concettuale-filosofica" style="background:#f6e3ce; color:#b35400" data-i18n-area="concettuale-filosofica">concettuale-filosofica</span></div>
+<div id='definitions-container'>
+
+<div class="definition-card" data-area="normativa-giuridica" data-term="ai act">
+    <span class="label-area" style="background:#cce0ff; color:#1f3f5c" data-i18n-area="normativa-giuridica">normativa-giuridica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> AI Act</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> AI Act</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> European Union regulation governing the development, deployment, and use of artificial intelligence systems.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Regolamento dell'Unione Europea che disciplina lo sviluppo, l'implementazione e l'uso dei sistemi di intelligenza artificiale.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> Regulation 1689/2024</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> AI Governance, High-Risk AI Systems, Ethical Guidelines</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> Reg. UE 1689/2024</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=LAW001'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="normativa-giuridica" data-term="high-risk ai system">
+    <span class="label-area" style="background:#cce0ff; color:#1f3f5c" data-i18n-area="normativa-giuridica">normativa-giuridica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> High-Risk AI System</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Sistema IA ad Alto Rischio</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> AI systems that have significant impact on people's safety or fundamental rights and are subject to stricter requirements.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Sistemi di IA che hanno un impatto significativo sulla sicurezza delle persone o sui diritti fondamentali e sono soggetti a requisiti più severi.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> Critical AI System</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> AI Act, Medical AI, Autonomous Vehicle AI, Risk Assessment</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> AI Act 1689/2024, NIST AI RMF</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=LAW002'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="normativa-giuridica" data-term="data protection">
+    <span class="label-area" style="background:#cce0ff; color:#1f3f5c" data-i18n-area="normativa-giuridica">normativa-giuridica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Data Protection</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Protezione dei dati</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Principles and rules to ensure that AI systems respect privacy and personal data rights.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Principi e regole per garantire che i sistemi di IA rispettino la privacy e i diritti sui dati personali.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> Privacy Compliance</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> AI Governance, GDPR Compliance, High-Risk AI System</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> GDPR 679/2016, AI Act 1689/2024</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=LAW003'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="normativa-giuridica" data-term="regulatory sandboxes">
+    <span class="label-area" style="background:#cce0ff; color:#1f3f5c" data-i18n-area="normativa-giuridica">normativa-giuridica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Regulatory Sandboxes</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Banchi di prova regolatori</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Controlled environments allowing AI developers to test products under regulatory supervision.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Ambienti controllati che consentono agli sviluppatori di IA di testare prodotti sotto supervisione normativa.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> Testing Sandbox</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> AI Act, High-Risk AI System</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> AI Act 1689/2024</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=LAW004'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="normativa-giuridica" data-term="risk assessment">
+    <span class="label-area" style="background:#cce0ff; color:#1f3f5c" data-i18n-area="normativa-giuridica">normativa-giuridica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Risk Assessment</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Valutazione del rischio</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Process of identifying and evaluating potential harms of AI systems in compliance with legal requirements.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Processo di identificazione e valutazione dei potenziali danni dei sistemi IA in conformità ai requisiti legali.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> AI Risk Evaluation</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> High-Risk AI System, AI Act</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> AI Act 1689/2024</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=LAW005'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="normativa-giuridica" data-term="conformity assessment">
+    <span class="label-area" style="background:#cce0ff; color:#1f3f5c" data-i18n-area="normativa-giuridica">normativa-giuridica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Conformity Assessment</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Valutazione di conformità</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Verification that AI systems meet the requirements set by law before being deployed on the market.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Verifica che i sistemi IA rispettino i requisiti stabiliti dalla legge prima della messa in commercio.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> Compliance Check</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> High-Risk AI System, Risk Assessment</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> AI Act 1689/2024</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=LAW006'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="normativa-giuridica" data-term="ai liability">
+    <span class="label-area" style="background:#cce0ff; color:#1f3f5c" data-i18n-area="normativa-giuridica">normativa-giuridica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> AI Liability</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Responsabilità IA</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Legal principles determining who is responsible when AI systems cause harm.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Principi giuridici che determinano chi è responsabile quando i sistemi IA causano danni.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> Liability Rules</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> AI Act, Data Protection</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> AI Act 1689/2024</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=LAW007'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="normativa-giuridica" data-term="transparency obligations">
+    <span class="label-area" style="background:#cce0ff; color:#1f3f5c" data-i18n-area="normativa-giuridica">normativa-giuridica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Transparency Obligations</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Obblighi di trasparenza</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Requirements for AI systems to provide clear information on functionality and decision-making.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Requisiti per i sistemi IA di fornire informazioni chiare su funzionalità e processi decisionali.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> Disclosure Duties</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> AI Act, Explainability, Ethical Guidelines</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> AI Act 1689/2024</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=LAW008'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="normativa-giuridica" data-term="human oversight">
+    <span class="label-area" style="background:#cce0ff; color:#1f3f5c" data-i18n-area="normativa-giuridica">normativa-giuridica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Human Oversight</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Sorveglianza umana</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Obligation to ensure human monitoring of AI systems to prevent or mitigate risks.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Obbligo di garantire il monitoraggio umano dei sistemi IA per prevenire o mitigare i rischi.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> Human-in-the-loop</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> High-Risk AI System, AI Liability</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> AI Act 1689/2024</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=LAW009'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="normativa-giuridica" data-term="market surveillance">
+    <span class="label-area" style="background:#cce0ff; color:#1f3f5c" data-i18n-area="normativa-giuridica">normativa-giuridica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Market Surveillance</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Sorveglianza del mercato</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Processes and authorities responsible for ensuring AI systems comply with legal standards after deployment.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Processi e autorità responsabili di garantire che i sistemi IA rispettino gli standard legali dopo la loro immissione sul mercato.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> Regulatory Oversight</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> AI Act, Conformity Assessment</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> AI Act 1689/2024</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=LAW010'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="tecnico-operativa" data-term="machine learning">
+    <span class="label-area" style="background:#d0e4dd; color:#2c3e50" data-i18n-area="tecnico-operativa">tecnico-operativa</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Machine Learning</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Apprendimento Automatico</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> A subset of AI where systems improve performance through experience, data, and feedback without being explicitly programmed.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Un sottoinsieme di IA in cui i sistemi migliorano le prestazioni attraverso l'esperienza senza essere programmati esplicitamente.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> ML</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Artificial Intelligence, Supervised Learning, Unsupervised Learning, Deep Learning</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> ISO/IEC 22989:2022</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=TECH001'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="tecnico-operativa" data-term="deep learning">
+    <span class="label-area" style="background:#d0e4dd; color:#2c3e50" data-i18n-area="tecnico-operativa">tecnico-operativa</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Deep Learning</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Apprendimento Profondo</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> A class of machine learning using neural networks with multiple layers to model complex patterns.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Una classe di apprendimento automatico che utilizza reti neurali con più strati per modellare schemi complessi.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> DL</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Machine Learning, CNN, RNN, AI Systems</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> ISO/IEC 22989:2022</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=TECH002'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="tecnico-operativa" data-term="natural language processing">
+    <span class="label-area" style="background:#d0e4dd; color:#2c3e50" data-i18n-area="tecnico-operativa">tecnico-operativa</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Natural Language Processing</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Elaborazione del Linguaggio Naturale</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> AI techniques to enable machines to understand, interpret, and generate human language.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Tecniche di IA per consentire alle macchine di comprendere, interpretare e generare il linguaggio umano.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> NLP</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> AI Systems, Text Classification, Machine Translation, Speech Recognition</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> ISO/IEC 22989:2022</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=TECH003'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="tecnico-operativa" data-term="computer vision">
+    <span class="label-area" style="background:#d0e4dd; color:#2c3e50" data-i18n-area="tecnico-operativa">tecnico-operativa</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Computer Vision</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Visione Artificiale</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> AI methods enabling computers to interpret and process visual information from the environment.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Metodi di IA che consentono ai computer di interpretare e elaborare informazioni visive dall'ambiente.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> </div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> AI Systems, Image Recognition, Object Detection, Deep Learning</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> ISO/IEC 22989:2022</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=TECH004'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="tecnico-operativa" data-term="reinforcement learning">
+    <span class="label-area" style="background:#d0e4dd; color:#2c3e50" data-i18n-area="tecnico-operativa">tecnico-operativa</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Reinforcement Learning</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Apprendimento per Rinforzo</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> A learning method where agents learn to make decisions by trial and error to maximize cumulative reward.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Un metodo di apprendimento in cui gli agenti imparano a prendere decisioni tramite prove ed errori per massimizzare la ricompensa cumulativa.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> RL</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Machine Learning, Q-Learning, Policy Gradient Methods, Autonomous Systems</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> ISO/IEC 22989:2022</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=TECH005'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="tecnico-operativa" data-term="autonomous systems">
+    <span class="label-area" style="background:#d0e4dd; color:#2c3e50" data-i18n-area="tecnico-operativa">tecnico-operativa</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Autonomous Systems</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Sistemi Autonomi</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> AI-enabled systems capable of performing tasks without continuous human intervention.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Sistemi abilitati all'IA in grado di svolgere compiti senza intervento umano continuo.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> </div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> AI Systems, Autonomous Vehicles, Robotics, Reinforcement Learning</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> ISO/IEC 22989:2022</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=TECH006'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="tecnico-operativa" data-term="explainability">
+    <span class="label-area" style="background:#d0e4dd; color:#2c3e50" data-i18n-area="tecnico-operativa">tecnico-operativa</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Explainability</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Spiegabilità</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Ability of AI systems to provide understandable explanations for their outputs and decisions.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Capacità dei sistemi IA di fornire spiegazioni comprensibili sui propri output e decisioni.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> XAI</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Transparency, Local Explainability, Global Explainability, Accountability</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> ISO/IEC 23894:2023</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=TECH007'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="tecnico-operativa" data-term="ai systems">
+    <span class="label-area" style="background:#d0e4dd; color:#2c3e50" data-i18n-area="tecnico-operativa">tecnico-operativa</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> AI Systems</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Sistemi IA</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Integrated AI applications combining algorithms, data, and computing resources to perform tasks.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Applicazioni IA integrate che combinano algoritmi, dati e risorse computazionali per svolgere compiti.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> </div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Artificial Intelligence, Machine Learning, Computer Vision, Deep Learning</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> ISO/IEC 22989:2022</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=TECH008'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="tecnico-operativa" data-term="neural networks">
+    <span class="label-area" style="background:#d0e4dd; color:#2c3e50" data-i18n-area="tecnico-operativa">tecnico-operativa</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Neural Networks</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Reti Neurali</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Computational models inspired by biological neural networks to recognize patterns and solve problems.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Modelli computazionali ispirati alle reti neurali biologiche per riconoscere schemi e risolvere problemi.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> ANN</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Machine Learning, CNN, RNN, Deep Learning</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> ISO/IEC 22989:2022</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=TECH009'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="tecnico-operativa" data-term="robotics">
+    <span class="label-area" style="background:#d0e4dd; color:#2c3e50" data-i18n-area="tecnico-operativa">tecnico-operativa</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Robotics</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Robotica</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Field of engineering focused on designing, building, and operating robots, often using AI for autonomy.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Campo dell'ingegneria focalizzato sulla progettazione, costruzione e gestione di robot, spesso utilizzando l'IA per l'autonomia.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> </div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Autonomous Systems, Machine Learning</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> ISO/IEC 22989:2022</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=TECH010'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="concettuale-filosofica" data-term="autonomy">
+    <span class="label-area" style="background:#f6e3ce; color:#b35400" data-i18n-area="concettuale-filosofica">concettuale-filosofica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Autonomy</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Autonomia</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> The capacity of an AI system to operate and make decisions without human intervention.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> La capacità di un sistema IA di operare e prendere decisioni senza intervento umano.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> Self-governance</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Agency, Moral Autonomy in AI, Ethics, Accountability</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> GPAI Codes of Practice</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=PHIL001'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="concettuale-filosofica" data-term="ethics">
+    <span class="label-area" style="background:#f6e3ce; color:#b35400" data-i18n-area="concettuale-filosofica">concettuale-filosofica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Ethics</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Etica</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Philosophical study of moral principles guiding the development, deployment, and societal impact of AI.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Studio filosofico dei principi morali che guidano lo sviluppo e l'uso dell'IA.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> </div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Philosophy, AI Ethics, Machine Ethics, Autonomy</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> GPAI Codes of Practice</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=PHIL002'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="concettuale-filosofica" data-term="agency">
+    <span class="label-area" style="background:#f6e3ce; color:#b35400" data-i18n-area="concettuale-filosofica">concettuale-filosofica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Agency</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Agenzialità</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Ability of an AI system to act intentionally and make decisions affecting outcomes.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Capacità di un sistema IA di agire intenzionalmente e prendere decisioni che influenzano i risultati.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> </div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> AI Philosophy, Autonomy, Ethics</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> GPAI Codes of Practice, ISO/IEC 22989:2022</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=PHIL003'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="concettuale-filosofica" data-term="moral responsibility">
+    <span class="label-area" style="background:#f6e3ce; color:#b35400" data-i18n-area="concettuale-filosofica">concettuale-filosofica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Moral Responsibility</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Responsabilità morale</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Concept of assigning ethical accountability for AI system actions to humans or organizations.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Concetto di assegnare responsabilità etica delle azioni dei sistemi IA a esseri umani o organizzazioni.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> </div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Ethics, Autonomy, Accountability</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> GPAI Codes of Practice</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=PHIL004'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="concettuale-filosofica" data-term="transparency">
+    <span class="label-area" style="background:#f6e3ce; color:#b35400" data-i18n-area="concettuale-filosofica">concettuale-filosofica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Transparency</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Trasparenza concettuale</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Philosophical principle that AI operations and decisions should be understandable to humans.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Principio filosofico secondo cui le operazioni e decisioni dell'IA dovrebbero essere comprensibili agli esseri umani.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> </div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Ethics, Explainability, Accountability</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> GPAI Codes of Practice</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=PHIL005'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="concettuale-filosofica" data-term="fairness">
+    <span class="label-area" style="background:#f6e3ce; color:#b35400" data-i18n-area="concettuale-filosofica">concettuale-filosofica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Fairness</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Equità concettuale</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Ethical principle that AI should operate without unfair bias or discrimination.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Principio etico secondo cui l'IA dovrebbe operare senza bias o discriminazioni ingiustificate.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> </div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Ethics, Bias Mitigation</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> GPAI Codes of Practice, ISO/IEC 23894:2023</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=PHIL006'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="concettuale-filosofica" data-term="accountability">
+    <span class="label-area" style="background:#f6e3ce; color:#b35400" data-i18n-area="concettuale-filosofica">concettuale-filosofica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Accountability</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Responsabilità concettuale</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Ethical principle that humans or organizations must answer for AI outcomes.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Principio etico secondo cui esseri umani o organizzazioni devono rispondere dei risultati dell'IA.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> </div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Ethics, Transparency, Moral Responsibility</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> GPAI Codes of Practice</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=PHIL007'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="concettuale-filosofica" data-term="privacy">
+    <span class="label-area" style="background:#f6e3ce; color:#b35400" data-i18n-area="concettuale-filosofica">concettuale-filosofica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Privacy</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Privacy concettuale</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Philosophical concern regarding the protection of personal data in AI systems.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Preoccupazione filosofica relativa alla protezione dei dati personali nei sistemi IA.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> </div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Ethics, Data Protection, Fairness</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> GPAI Codes of Practice, GDPR 679/2016</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=PHIL008'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="concettuale-filosofica" data-term="moral agency">
+    <span class="label-area" style="background:#f6e3ce; color:#b35400" data-i18n-area="concettuale-filosofica">concettuale-filosofica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Moral Agency</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Agenzialità morale</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Capacity of AI systems to be considered capable of moral decision-making.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Capacità dei sistemi IA di essere considerati in grado di prendere decisioni morali.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> </div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Agency, Autonomy, Ethics</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> GPAI Codes of Practice</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=PHIL009'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="concettuale-filosofica" data-term="emergent intelligence">
+    <span class="label-area" style="background:#f6e3ce; color:#b35400" data-i18n-area="concettuale-filosofica">concettuale-filosofica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> Emergent Intelligence</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> Intelligenza emergente</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> The phenomenon where complex intelligent behavior arises from simpler AI components.</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Fenomeno in cui comportamenti intelligenti complessi emergono da componenti IA più semplici.</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> Emergent AI</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> Artificial Intelligence, Autonomy, Agency</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> ISO/IEC 22989:2022, GPAI Codes of Practice</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=PHIL010'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="concettuale-filosofica" data-term="agentic ai">
+    <span class="label-area" style="background:#f6e3ce; color:#b35400" data-i18n-area="concettuale-filosofica">concettuale-filosofica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> agentic AI</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> IA agentica</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> Definition in English ...</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> Definizione in italiano ...</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> agency AI, agentic systems</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> artificial intelligence, autonomy</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> AI Act</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=USR-20250914213110-001'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+
+<div class="definition-card" data-area="concettuale-filosofica" data-term="ciao">
+    <span class="label-area" style="background:#f6e3ce; color:#b35400" data-i18n-area="concettuale-filosofica">concettuale-filosofica</span>
+    <div class="en-field"><strong data-i18n="term">Termine:</strong> ciao</div>
+    <div class="it-field"><strong data-i18n="term">Termine:</strong> ciao</div>
+    <div class="en-field"><strong data-i18n="definition">Definizione:</strong> xxx</div>
+    <div class="it-field"><strong data-i18n="definition">Definizione:</strong> xxx</div>
+    <div class="always-visible"><strong data-i18n="other_names">Altre denominazioni:</strong> aa</div>
+    <div class="always-visible"><strong data-i18n="related_terms">Termini correlati:</strong> aa</div>
+    <div class="always-visible"><strong data-i18n="sources">Fonti:</strong> aaa</div>
+    <span class="update-link" onclick="window.location.href='new_term.html?update=PROPOSAL_1757891695'" data-i18n="update">Proponi aggiornamento</span>
+</div>
+<footer id='footer-text'>© 2025 Tesauro bilingue sviluppato da Valentini Enrico. Tutti i diritti riservati.</footer>
+<script>
+const badges = document.querySelectorAll('.badge');
+const cards = document.querySelectorAll('.definition-card');
+const searchInput = document.getElementById('search-input');
+badges.forEach(badge => {
+    badge.addEventListener('click', function() {
+        badges.forEach(b => b.classList.remove('selected'));
+        badge.classList.add('selected');
+        const area = badge.getAttribute('data-area');
+        cards.forEach(c => {
+            if(area==='all' || c.getAttribute('data-area')===area){
+                c.style.display='block';
+            } else {
+                c.style.display='none';
+            }
+        });
+    });
+});
+searchInput.addEventListener('input', function(){
+    const term = searchInput.value.toLowerCase();
+    cards.forEach(c=>{
+        if(c.getAttribute('data-term').includes(term)){
+            c.style.display='block';
+        } else {
+            c.style.display='none';
+        }
+    });
+});
+
+const langBadges = document.querySelectorAll('.lang-badge');
+let selectedLang = localStorage.getItem('selectedLang') || 'en';
+function updateLanguage() {
+    const enFields = document.querySelectorAll('.en-field');
+    const itFields = document.querySelectorAll('.it-field');
+    const alwaysVisible = document.querySelectorAll('.always-visible');
+    const i18nElements = document.querySelectorAll('[data-i18n]');
+    const i18nAreas = document.querySelectorAll('[data-i18n-area]');
+    const translations = {"home": {"it": "Home", "en": "Home"}, "new_term": {"it": "Proponi un nuovo termine", "en": "Propose a new term"}, "intro": {"it": "Benvenuto nel tesauro bilingue dedicato alla governance dell'Intelligenza Artificiale. Filtra per area semantica cliccando sui badge qui sotto o cerca un termine:", "en": "Welcome to the bilingual thesaurus dedicated to Artificial Intelligence governance. Filter by semantic area by clicking the badges below or search for a term:"}, "update": {"it": "Proponi aggiornamento", "en": "Propose update"}, "term": {"it": "Termine:", "en": "Term:"}, "definition": {"it": "Definizione:", "en": "Definition:"}, "other_names": {"it": "Altre denominazioni:", "en": "Other names:"}, "related_terms": {"it": "Termini correlati:", "en": "Related terms:"}, "sources": {"it": "Fonti:", "en": "Sources:"}, "submitter": {"it": "Autore della richiesta (nome e cognome):", "en": "Request author (full name):"}, "motivation": {"it": "Motivazione della richiesta:", "en": "Reason for request:"}, "submit_button": {"it": "Proponi un nuovo termine", "en": "Propose a new term"}, "footer": {"it": "\u00a9 2025 Tesauro bilingue sviluppato da Valentini Enrico. Tutti i diritti riservati.", "en": "\u00a9 2025 Bilingual thesaurus developed by Valentini Enrico. All rights reserved."}, "form_titles": {"new_it": "Proponi l'inserimento di un nuovo termine", "new_en": "Propose the inclusion of a new term", "update_it": "Proponi un aggiornamento per il termine selezionato", "update_en": "Propose an update for the selected term"}, "areas": {"normativa-giuridica": {"it": "normativa-giuridica", "en": "legal-regulatory"}, "tecnico-operativa": {"it": "tecnico-operativa", "en": "technical-operational"}, "concettuale-filosofica": {"it": "concettuale-filosofica", "en": "conceptual-philosophical"}}};
+
+    if(selectedLang==='en'){
+        enFields.forEach(e=>e.style.display='block');
+        itFields.forEach(e=>e.style.display='none');
+    } else {
+        enFields.forEach(e=>e.style.display='none');
+        itFields.forEach(e=>e.style.display='block');
+    }
+    alwaysVisible.forEach(e=>e.style.display='block');
+    i18nElements.forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        if(translations[key]){
+            el.textContent = translations[key][selectedLang];
+        }
+    });
+    i18nAreas.forEach(el=>{
+        const area = el.getAttribute('data-i18n-area');
+        if(area==='all_areas'){
+            el.textContent = selectedLang==='en' ? 'All semantic areas' : 'Tutte le aree semantiche';
+        } else if(translations['areas'][area]){
+            el.textContent = translations['areas'][area][selectedLang];
+        }
+    });
+    document.getElementById('intro-text').textContent = translations['intro'][selectedLang];
+    document.getElementById('footer-text').textContent = translations['footer'][selectedLang];
+}
+langBadges.forEach(lb=>{
+    lb.addEventListener('click', function(){
+        langBadges.forEach(l=>l.classList.remove('selected'));
+        lb.classList.add('selected');
+        selectedLang = lb.getAttribute('data-lang');
+        localStorage.setItem('selectedLang', selectedLang);
+        updateLanguage();
+    });
+});
+langBadges.forEach(lb=>{if(lb.getAttribute('data-lang')===selectedLang) lb.classList.add('selected');});
+updateLanguage();
+</script>
+</body>
+</html>
