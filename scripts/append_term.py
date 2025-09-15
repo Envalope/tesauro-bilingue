@@ -1,57 +1,70 @@
 import json
-import sys
-import re
-from datetime import datetime
+import os
 
-# Percorso del file JSON principale
-data_file = "definitions.json"
+# Percorso file definitions
+DATA_FILE = 'definitions.json'
 
-# Titolo e corpo dell'issue passati come argomenti
-title = sys.argv[1]
-body = sys.argv[2]
+# Recupera l’evento GitHub
+event_path = os.environ.get('GITHUB_EVENT_PATH')
+if not event_path:
+    raise RuntimeError("GITHUB_EVENT_PATH non trovato. Questo script deve girare in GitHub Actions.")
 
-# Apri il JSON esistente
-with open(data_file, "r", encoding="utf-8") as f:
-    defs = json.load(f)
+with open(event_path, 'r', encoding='utf-8') as f:
+    event = json.load(f)
 
-# Funzione per estrarre campi dal corpo dell'issue
-def extract_field(name, body):
-    """
-    Cerca nel corpo dell'issue un campo del tipo:
-    **NomeCampo:** valore
-    """
-    m = re.search(rf"\*\*{re.escape(name)}:\*\*\s*(.+)", body)
-    return m.group(1).strip() if m else ""
+issue = event['issue']
 
-# Estrazione dei campi principali
-term_name = extract_field("Term / Termine", body)
-definition = extract_field("Definition / Definizione", body)
-area = extract_field("Area semantica", body)
-variants = extract_field("Altre denominazioni", body).split(",")
-relations = extract_field("Termini correlati", body).split(",")
-sources_raw = extract_field("Fonti", body).split(",")
+# Estrai il body dell'issue
+body = issue.get('body', '')
 
-# Preparazione delle fonti in formato lista di dizionari
-sources = [{"name": s.strip()} for s in sources_raw if s.strip()]
+# Funzione semplice per parse body
+def parse_body(text):
+    data = {}
+    for line in text.split('\n'):
+        if line.startswith("**Term / Termine:**"):
+            data['term'] = line.replace("**Term / Termine:**", "").strip()
+        elif line.startswith("**Definition / Definizione:**"):
+            data['definition'] = line.replace("**Definition / Definizione:**", "").strip()
+        elif line.startswith("**Area semantica:**"):
+            data['area'] = line.replace("**Area semantica:**", "").strip()
+        elif line.startswith("**Altre denominazioni:**"):
+            variants = line.replace("**Altre denominazioni:**", "").strip()
+            data['variants'] = [v.strip() for v in variants.split(',')] if variants else []
+        elif line.startswith("**Termini correlati:**"):
+            related = line.replace("**Termini correlati:**", "").strip()
+            data['relations'] = [r.strip() for r in related.split(',')] if related else []
+        elif line.startswith("**Fonti:**"):
+            sources = line.replace("**Fonti:**", "").strip()
+            data['sources'] = [{'name': s.strip()} for s in sources.split(',')] if sources else []
+    return data
 
-# Costruzione dell'oggetto JSON del nuovo termine
+parsed = parse_body(body)
+
+# Carica definitions.json
+with open(DATA_FILE, 'r', encoding='utf-8') as f:
+    definitions = json.load(f)
+
+# Genera ID automatico
+existing_ids = [d['id'] for d in definitions]
+new_id_num = len(definitions) + 1
+new_id = f"CUST{new_id_num:03d}"
+
+# Aggiungi il nuovo termine
 new_entry = {
-    "id": f"{area.upper()[:4]}-{datetime.now().strftime('%Y%m%d%H%M%S')}",
-    "term_en": term_name,
-    "term_it": term_name,
-    "definition_en": definition,
-    "definition_it": definition,
-    "area": area,
-    "variants": [v.strip() for v in variants if v.strip()],
-    "relations": {"related": [r.strip() for r in relations if r.strip()]},
-    "sources": sources
+    'id': new_id,
+    'term_it': parsed['term'],
+    'term_en': parsed['term'],  # opzionale: se vuoi tradurre, va modificato
+    'definition_it': parsed['definition'],
+    'definition_en': parsed['definition'],
+    'variants': parsed.get('variants', []),
+    'relations': {'related': parsed.get('relations', [])},
+    'sources': parsed.get('sources', [])
 }
 
-# Aggiungi il nuovo termine alla lista esistente
-defs.append(new_entry)
+definitions.append(new_entry)
 
-# Salva il JSON aggiornato
-with open(data_file, "w", encoding="utf-8") as f:
-    json.dump(defs, f, ensure_ascii=False, indent=2)
+# Salva definitions.json
+with open(DATA_FILE, 'w', encoding='utf-8') as f:
+    json.dump(definitions, f, ensure_ascii=False, indent=4)
 
-print(f"Aggiunto termine: {term_name}")
+print(f"Nuovo termine aggiunto: {parsed['term']}")
