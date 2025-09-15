@@ -1,11 +1,11 @@
 import json
 import os
 from datetime import datetime
+import re
 
 # Percorsi file
 DATA_FILE = 'definitions.json'
 OUTPUT_DIR = 'site'
-
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 with open(DATA_FILE, 'r', encoding='utf-8') as f:
@@ -17,6 +17,7 @@ AREA_COLORS = {
     'tecnico-operativa': '#d0e4dd',
     'concettuale-filosofica': '#f6e3ce'
 }
+
 AREA_TEXT_COLOR = {
     'normativa-giuridica': '#1f3f5c',
     'tecnico-operativa': '#2c3e50',
@@ -36,10 +37,11 @@ translations = {
     "definition": {"it": "Definizione:", "en": "Definition:"},
     "other_names": {"it": "Altre denominazioni:", "en": "Other names:"},
     "related_terms": {"it": "Termini correlati:", "en": "Related terms:"},
-    "sources": {"it": "Fonti:", "en": "Sources:"},
-    "submitter": {"it": "Autore della richiesta (nome e cognome):", "en": "Request author (full name):"},
+    "sources": {"it": "Fonti (nome regolamento):", "en": "Sources (regulation name):"},
+    "submitter": {"it": "Autore della richiesta (nome, cognome, email):", "en": "Request author (first name, last name, email):"},
     "motivation": {"it": "Motivazione della richiesta:", "en": "Reason for request:"},
     "submit_button": {"it": "Proponi un nuovo termine", "en": "Propose a new term"},
+    "update_button": {"it": "Proponi aggiornamento", "en": "Propose update"},
     "footer": {
         "it": f"© {datetime.now().year} Tesauro bilingue sviluppato da Valentini Enrico. Tutti i diritti riservati.",
         "en": f"© {datetime.now().year} Bilingual thesaurus developed by Valentini Enrico. All rights reserved."
@@ -54,7 +56,8 @@ translations = {
         "normativa-giuridica": {"it": "normativa-giuridica", "en": "legal-regulatory"},
         "tecnico-operativa": {"it": "tecnico-operativa", "en": "technical-operational"},
         "concettuale-filosofica": {"it": "concettuale-filosofica", "en": "conceptual-philosophical"}
-    }
+    },
+    "select_area": {"it": "Seleziona l'area semantica", "en": "Select semantic area"}
 }
 
 # =========================
@@ -99,20 +102,18 @@ footer {{ text-align:center; padding:20px; background:#1f3f5c; color:white; font
 <a href="new_term.html" data-i18n="new_term">Proponi nuovo termine</a>
 </div>
 <div class="language-select">
-<a class="lang-badge" data-lang="en">English</a> |
-<a class="lang-badge" data-lang="it">Italiano</a>
+<a class="lang-badge" data-lang="en">English</a> | <a class="lang-badge" data-lang="it">Italiano</a>
 </div>
 </header>
-
 <div class="intro" id="intro-text">{translations['intro']['it']}</div>
 <input type="text" id="search-input" placeholder="Cerca un termine...">
-
 <div class="area-filter" id="area-filter">
 <span class="badge selected" data-area="all" data-i18n-area="all_areas">All semantic areas</span>
 """
 
 for area, color in AREA_COLORS.items():
     html_index += f'<span class="badge" data-area="{area}" style="background:{color}; color:{AREA_TEXT_COLOR[area]}" data-i18n-area="{area}">{area}</span>'
+
 html_index += "</div>\n<div id='definitions-container'>\n"
 
 for d in definitions:
@@ -127,18 +128,17 @@ for d in definitions:
     relations_html = ', '.join([item for sublist in d['relations'].values() for item in sublist])
     variants_html = ', '.join(d['variants']) if d['variants'] else ''
     sources_html = ', '.join([s['name'] for s in d['sources']])
-    
     html_index += f"""
 <div class="definition-card" data-area="{area}" data-term="{d['term_en'].lower()}">
-    <span class="label-area" style="background:{bg_color}; color:{text_color}" data-i18n-area="{area}">{area}</span>
-    <div class="en-field"><strong data-i18n="term">{translations['term']['it']}</strong> {d['term_en']}</div>
-    <div class="it-field"><strong data-i18n="term">{translations['term']['it']}</strong> {d['term_it']}</div>
-    <div class="en-field"><strong data-i18n="definition">{translations['definition']['it']}</strong> {d['definition_en']}</div>
-    <div class="it-field"><strong data-i18n="definition">{translations['definition']['it']}</strong> {d['definition_it']}</div>
-    <div class="always-visible"><strong data-i18n="other_names">{translations['other_names']['it']}</strong> {variants_html}</div>
-    <div class="always-visible"><strong data-i18n="related_terms">{translations['related_terms']['it']}</strong> {relations_html}</div>
-    <div class="always-visible"><strong data-i18n="sources">{translations['sources']['it']}</strong> {sources_html}</div>
-    <span class="update-link" onclick="window.location.href='new_term.html?update={d['id']}'" data-i18n="update">{translations['update']['it']}</span>
+<span class="label-area" style="background:{bg_color}; color:{text_color}" data-i18n-area="{area}">{area}</span>
+<div class="en-field"><strong data-i18n="term">{translations['term']['it']}</strong> {d['term_en']}</div>
+<div class="it-field"><strong data-i18n="term">{translations['term']['it']}</strong> {d['term_it']}</div>
+<div class="en-field"><strong data-i18n="definition">{translations['definition']['it']}</strong> {d['definition_en']}</div>
+<div class="it-field"><strong data-i18n="definition">{translations['definition']['it']}</strong> {d['definition_it']}</div>
+<div class="always-visible"><strong data-i18n="other_names">{translations['other_names']['it']}</strong> {variants_html}</div>
+<div class="always-visible"><strong data-i18n="related_terms">{translations['related_terms']['it']}</strong> {relations_html}</div>
+<div class="always-visible"><strong data-i18n="sources">{translations['sources']['it']}</strong> {sources_html}</div>
+<span class="update-link" onclick="window.location.href='new_term.html?update={d['id']}'" data-i18n="update">{translations['update']['it']}</span>
 </div>
 """
 
@@ -147,8 +147,7 @@ html_index += f"<footer id='footer-text'>{translations['footer']['it']}</footer>
 # =========================
 # JavaScript index.html
 # =========================
-html_index += """
-<script>
+html_index += """<script>
 const badges = document.querySelectorAll('.badge');
 const cards = document.querySelectorAll('.definition-card');
 const searchInput = document.getElementById('search-input');
@@ -158,25 +157,18 @@ badges.forEach(badge => {
         badge.classList.add('selected');
         const area = badge.getAttribute('data-area');
         cards.forEach(c => {
-            if(area==='all' || c.getAttribute('data-area')===area){
-                c.style.display='block';
-            } else {
-                c.style.display='none';
-            }
+            if(area==='all' || c.getAttribute('data-area')===area){ c.style.display='block'; }
+            else { c.style.display='none'; }
         });
     });
 });
 searchInput.addEventListener('input', function(){
     const term = searchInput.value.toLowerCase();
     cards.forEach(c=>{
-        if(c.getAttribute('data-term').includes(term)){
-            c.style.display='block';
-        } else {
-            c.style.display='none';
-        }
+        if(c.getAttribute('data-term').includes(term)){ c.style.display='block'; }
+        else { c.style.display='none'; }
     });
 });
-
 const langBadges = document.querySelectorAll('.lang-badge');
 let selectedLang = localStorage.getItem('selectedLang') || 'en';
 function updateLanguage() {
@@ -186,41 +178,22 @@ function updateLanguage() {
     const i18nElements = document.querySelectorAll('[data-i18n]');
     const i18nAreas = document.querySelectorAll('[data-i18n-area]');
     const translations = """ + json.dumps(translations) + """;
-
-    if(selectedLang==='en'){
-        enFields.forEach(e=>e.style.display='block');
-        itFields.forEach(e=>e.style.display='none');
-    } else {
-        enFields.forEach(e=>e.style.display='none');
-        itFields.forEach(e=>e.style.display='block');
-    }
+    if(selectedLang==='en'){ enFields.forEach(e=>e.style.display='block'); itFields.forEach(e=>e.style.display='none'); }
+    else { enFields.forEach(e=>e.style.display='none'); itFields.forEach(e=>e.style.display='block'); }
     alwaysVisible.forEach(e=>e.style.display='block');
     i18nElements.forEach(el=>{
         const key = el.getAttribute('data-i18n');
-        if(translations[key]){
-            el.textContent = translations[key][selectedLang];
-        }
+        if(translations[key]){ el.textContent = translations[key][selectedLang]; }
     });
     i18nAreas.forEach(el=>{
         const area = el.getAttribute('data-i18n-area');
-        if(area==='all_areas'){
-            el.textContent = selectedLang==='en' ? 'All semantic areas' : 'Tutte le aree semantiche';
-        } else if(translations['areas'][area]){
-            el.textContent = translations['areas'][area][selectedLang];
-        }
+        if(area==='all_areas'){ el.textContent = selectedLang==='en' ? 'All semantic areas' : 'Tutte le aree semantiche'; }
+        else if(translations['areas'][area]){ el.textContent = translations['areas'][area][selectedLang]; }
     });
     document.getElementById('intro-text').textContent = translations['intro'][selectedLang];
     document.getElementById('footer-text').textContent = translations['footer'][selectedLang];
 }
-langBadges.forEach(lb=>{
-    lb.addEventListener('click', function(){
-        langBadges.forEach(l=>l.classList.remove('selected'));
-        lb.classList.add('selected');
-        selectedLang = lb.getAttribute('data-lang');
-        localStorage.setItem('selectedLang', selectedLang);
-        updateLanguage();
-    });
-});
+langBadges.forEach(lb=>{ lb.addEventListener('click', function(){ langBadges.forEach(l=>l.classList.remove('selected')); lb.classList.add('selected'); selectedLang = lb.getAttribute('data-lang'); localStorage.setItem('selectedLang', selectedLang); updateLanguage(); }); });
 langBadges.forEach(lb=>{if(lb.getAttribute('data-lang')===selectedLang) lb.classList.add('selected');});
 updateLanguage();
 </script>
@@ -230,7 +203,6 @@ updateLanguage();
 
 with open(os.path.join(OUTPUT_DIR, 'index.html'), 'w', encoding='utf-8') as f:
     f.write(html_index)
-
 print(f"index.html generato correttamente in '{OUTPUT_DIR}'")
 
 # =========================
@@ -258,14 +230,16 @@ header h1 {{ margin:0; font-size:2em; font-weight:700; }}
 .form-container button:hover {{ background:#155a8a; }}
 .top-home {{ display:inline-block; color:white; background:#155a8a; padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:bold; margin-bottom:20px; }}
 .top-home:hover {{ background:#1f3f5c; }}
+#popup-message {{ position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1f3f5c; color: white; padding: 15px 25px; border-radius: 8px; font-weight: bold; display: none; opacity:0; transition: opacity 0.5s, transform 0.5s; z-index: 1000; }}
+#popup-message.show {{ display:block; opacity:1; transform: translateX(-50%) translateY(0); }}
+#popup-message.error {{ background: #c0392b; }}
 </style>
 </head>
 <body>
 <header>
 <h1 id="form-title">Proponi nuovo termine</h1>
 <div class="language-select">
-<a class="lang-badge" data-lang="en">English</a> |
-<a class="lang-badge" data-lang="it">Italiano</a>
+<a class="lang-badge" data-lang="en">English</a> | <a class="lang-badge" data-lang="it">Italiano</a>
 </div>
 </header>
 <div class="form-container">
@@ -275,9 +249,9 @@ header h1 {{ margin:0; font-size:2em; font-weight:700; }}
 <input type="text" name="term" id="term">
 <label data-i18n="definition">Definition / Definizione:</label>
 <textarea name="definition" id="definition" rows="4"></textarea>
-<label for="area" data-i18n="areas">Area semantica:</label>
+<label for="area" id="area-label" data-i18n="select_area">Seleziona l'area semantica:</label>
 <select name="area" id="area">
-<option value="">Seleziona l'area semantica</option>
+<option value="" id="area-placeholder">Seleziona l'area semantica</option>
 <option value="normativa-giuridica">normativa-giuridica</option>
 <option value="tecnico-operativa">tecnico-operativa</option>
 <option value="concettuale-filosofica">concettuale-filosofica</option>
@@ -286,16 +260,16 @@ header h1 {{ margin:0; font-size:2em; font-weight:700; }}
 <input type="text" name="variants" id="variants">
 <label data-i18n="related_terms">Termini correlati:</label>
 <input type="text" name="relations" id="relations">
-<label data-i18n="sources">Fonti:</label>
+<label data-i18n="sources">Fonti (nome regolamento):</label>
 <input type="text" name="sources" id="sources">
 <label data-i18n="submitter">Autore della richiesta:</label>
-<input type="text" name="submitter" id="submitter">
+<input type="text" name="submitter" id="submitter" placeholder="Nome Cognome email@example.com">
 <label data-i18n="motivation">Motivazione:</label>
 <textarea name="motivation" id="motivation" rows="3"></textarea>
 <button type="submit" data-i18n="submit_button">Proponi un nuovo termine</button>
 </form>
 </div>
-
+<div id="popup-message"></div>
 <script>
 const langBadges = document.querySelectorAll('.lang-badge');
 let selectedLang = localStorage.getItem('selectedLang') || 'en';
@@ -303,13 +277,12 @@ const translations = """ + json.dumps(translations) + """;
 
 function updateLanguageForm() {
     const i18nElements = document.querySelectorAll('[data-i18n]');
-    i18nElements.forEach(el=>{
-        const key = el.getAttribute('data-i18n');
-        if(translations[key]){
-            el.textContent = translations[key][selectedLang];
-        }
-    });
-    // Aggiorna titolo form
+    const areaLabel = document.getElementById('area-label');
+    const areaPlaceholder = document.getElementById('area-placeholder');
+    i18nElements.forEach(el=>{ const key = el.getAttribute('data-i18n'); if(translations[key]){ el.textContent = translations[key][selectedLang]; } });
+    areaLabel.textContent = translations['select_area'][selectedLang] + ':';
+    areaPlaceholder.textContent = translations['select_area'][selectedLang];
+
     const params = new URLSearchParams(window.location.search);
     const updateId = params.get('update');
     if(updateId){
@@ -323,12 +296,13 @@ function updateLanguageForm() {
             const related = Object.values(term.relations).flat().join(', ');
             document.getElementById('relations').value = related;
             document.getElementById('sources').value = term.sources.map(s=>s.name).join(', ');
+            document.querySelector('button[type="submit"]').textContent = translations['update_button'][selectedLang];
         }
     } else {
         document.getElementById('form-title').textContent = selectedLang==='en' ? translations['form_titles']['new_en'] : translations['form_titles']['new_it'];
+        document.querySelector('button[type="submit"]').textContent = translations['submit_button'][selectedLang];
     }
 }
-
 langBadges.forEach(lb=>{
     lb.addEventListener('click', function(){
         langBadges.forEach(l=>l.classList.remove('selected'));
@@ -340,6 +314,56 @@ langBadges.forEach(lb=>{
 });
 langBadges.forEach(lb=>{if(lb.getAttribute('data-lang')===selectedLang) lb.classList.add('selected');});
 updateLanguageForm();
+
+// =========================
+// Form submission con validazioni aggiornate
+// =========================
+function showPopup(message, isError=false){
+    const popup = document.getElementById('popup-message');
+    popup.textContent = message;
+    popup.className = '';
+    if(isError) popup.classList.add('error');
+    popup.classList.add('show');
+    setTimeout(()=>{popup.classList.remove('show');}, 4000);
+}
+
+function isValidAuthor(str){
+    // Deve contenere almeno nome, cognome e email
+    const emailRegex = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$/i;
+    const parts = str.trim().split(' ');
+    return parts.length >= 3 && emailRegex.test(parts[parts.length-1]);
+}
+
+document.getElementById('term-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    const term = document.getElementById('term').value.trim();
+    const definition = document.getElementById('definition').value.trim();
+    const area = document.getElementById('area').value.trim();
+    const variants = document.getElementById('variants').value.trim();
+    const relations = document.getElementById('relations').value.trim();
+    const sources = document.getElementById('sources').value.trim();
+    const submitter = document.getElementById('submitter').value.trim();
+    const motivation = document.getElementById('motivation').value.trim();
+
+    if(!term || !definition || !area || !variants || !relations || !sources || !submitter || !motivation){
+        showPopup('⚠️ Attenzione: compilare tutti i campi del form!', true);
+        return;
+    }
+
+    if(!isValidAuthor(submitter)){
+        showPopup('⚠️ Il campo Autore deve contenere Nome, Cognome e Email validi.', true);
+        return;
+    }
+
+    const isUpdate = new URLSearchParams(window.location.search).get('update') ? true : false;
+    const issueTitle = isUpdate ? `Aggiornamento termine: ${term}` : `Nuovo termine: ${term}`;
+    const issueBody = `**Term / Termine:** ${term}\n\n**Definition / Definizione:** ${definition}\n\n**Area semantica:** ${area}\n\n**Altre denominazioni:** ${variants}\n\n**Termini correlati:** ${relations}\n\n**Fonti:** ${sources}\n\n**Autore della richiesta:** ${submitter}\n\n**Motivazione:** ${motivation}`;
+    const repoUrl = 'https://github.com/Envalope/tesauro-bilingue/issues/new';
+    const url = repoUrl + '?title=' + encodeURIComponent(issueTitle) + '&body=' + encodeURIComponent(issueBody);
+    window.open(url, '_blank');
+
+    showPopup('✅ Form inviato correttamente! Verrai reindirizzato su GitHub per completare la submission.');
+});
 </script>
 </body>
 </html>
@@ -347,5 +371,4 @@ updateLanguageForm();
 
 with open(os.path.join(OUTPUT_DIR, 'new_term.html'), 'w', encoding='utf-8') as f:
     f.write(html_form)
-
 print(f"new_term.html generato correttamente in '{OUTPUT_DIR}'")

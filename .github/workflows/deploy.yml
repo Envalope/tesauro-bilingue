@@ -1,10 +1,10 @@
-name: Build and Deploy Tesauro
+name:  Build and Deploy Tesauro
 
 on:
   push:
     branches:
       - main  # usa master se il tuo branch è master
-
+ 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
