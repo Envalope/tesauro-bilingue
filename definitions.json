@@ -912,5 +912,26 @@
       "related": []
     },
     "sources": []
+  },
+  {
+    "id": "TECN-20250915211639",
+    "term_en": "prova",
+    "term_it": "prova",
+    "definition_en": "prova",
+    "definition_it": "prova",
+    "area": "tecnico-operativa",
+    "variants": [
+      "prova"
+    ],
+    "relations": {
+      "related": [
+        "prova"
+      ]
+    },
+    "sources": [
+      {
+        "name": "prova"
+      }
+    ]
   }
 ]
