@@ -878,5 +878,26 @@
     "definition_en": "Definizione del termine\\n**Area semantica:** AI",
     "definition_it": "Definizione del termine\\n**Area semantica:** AI",
     "area": "AI"
+  },
+  {
+    "id": "TECN-20250915210913",
+    "term_en": "ss",
+    "term_it": "ss",
+    "definition_en": "ss",
+    "definition_it": "ss",
+    "area": "tecnico-operativa",
+    "variants": [
+      "sss"
+    ],
+    "relations": {
+      "related": [
+        "ss"
+      ]
+    },
+    "sources": [
+      {
+        "name": "ss"
+      }
+    ]
   }
 ]
