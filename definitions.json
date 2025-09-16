@@ -942,5 +942,25 @@
                 "name": "sources"
             }
         ]
+    },
+    {
+        "id": "CUST036",
+        "term_it": "bdbdbddd",
+        "term_en": "bdbdbddd",
+        "definition_it": "dddd",
+        "definition_en": "dddd",
+        "variants": [
+            "ddd"
+        ],
+        "relations": {
+            "related": [
+                "ddd"
+            ]
+        },
+        "sources": [
+            {
+                "name": "ddd"
+            }
+        ]
     }
 ]
