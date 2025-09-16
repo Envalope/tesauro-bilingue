@@ -1,3 +1,4 @@
+# scripts/append_term.py
 import json
 import sys
 
@@ -35,3 +36,32 @@ with open("definitions.json", 'w', encoding='utf-8') as f:
     json.dump(definitions, f, ensure_ascii=False, indent=4)
 
 print(f"Termine '{new_term['term_en']}' aggiunto correttamente a definitions.json")
+
+issue_data = json.loads(sys.argv[1])
+
+definitions_file = 'definitions.json'
+
+# Carica definitions esistenti
+with open(definitions_file, 'r', encoding='utf-8') as f:
+    definitions = json.load(f)
+
+# Prepara nuovo termine
+new_term = {
+    "id": issue_data["id"],
+    "term_it": issue_data["term_it"],
+    "term_en": issue_data["term_en"],
+    "definition_it": issue_data["definition_it"],
+    "definition_en": issue_data["definition_en"],
+    "variants": issue_data.get("variants", []),
+    "relations": issue_data.get("relations", {}),
+    "sources": issue_data.get("sources", [])
+}
+
+# Aggiungi nuovo termine
+definitions.append(new_term)
+
+# Salva definitions aggiornato
+with open(definitions_file, 'w', encoding='utf-8') as f:
+    json.dump(definitions, f, ensure_ascii=False, indent=4)
+
+print(f"Termine {new_term['term_en']} aggiunto correttamente a definitions.json")
