@@ -1,0 +1,40 @@
+name: Approve Term
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  approve_term:
+    runs-on: ubuntu-latest
+    # Si attiva solo se la label 'approved' viene aggiunta
+    if: contains(github.event.issue.labels.*.name, 'approved')
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Save issue JSON
+      run: |
+        echo '${{ toJson(github.event.issue) }}' > issue.json
+
+    - name: Append term to definitions.json
+      run: |
+        python scripts/append_term.py issue.json
+
+    - name: Generate site
+      run: |
+        python generate_site.py
+
+    - name: Commit and push changes
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add definitions.json site/
+        git commit -m "Aggiornamento site e definitions.json da issue approvata #${{ github.event.issue.number }}" || echo "No changes to commit"
+        git push

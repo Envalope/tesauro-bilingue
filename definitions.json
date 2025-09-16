@@ -812,7 +812,8 @@
         ],
         "area_semantica": "concettuale-filosofica"
     },
-    {
+
+{
         "id": "PHIL010",
         "term_en": "Emergent Intelligence",
         "term_it": "Intelligenza emergente",
@@ -827,6 +828,7 @@
                 "Autonomy",
                 "Agency"
             ]
+
         },
         "variants": [
             "Emergent AI"
@@ -964,3 +966,4 @@
         ]
     }
 ]
+        

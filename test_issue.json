@@ -1,0 +1,10 @@
+{
+  "issue": {
+    "number": 123,
+    "title": "Nuovo termine di prova",
+    "body": "**Term / Termine:** TestTerm\n\n**Definition / Definizione:** Definizione di prova\n\n**Area semantica:** concettuale-filosofica\n\n**Altre denominazioni:** variante1, variante2\n\n**Termini correlati:** termine_correlato\n\n**Fonti:** Regolamento X\n\n**Autore della richiesta:** Enrico Valentini enrico@example.com\n\n**Motivazione:** Test automatico",
+    "labels": [
+      {"name": "approved"}
+    ]
+  }
+}
